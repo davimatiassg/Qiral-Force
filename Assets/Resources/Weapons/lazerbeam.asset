@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e77261f99005b4418cbb3b46e0210b2, type: 3}
+  m_Name: lazerbeam
+  m_EditorClassIdentifier: 
+  weaponName: lazerbeam
+  range: 1
+  dmg: 7
+  knb: 8
+  cd: 0.5
+  arc: 150
+  acel: 1
+  spr: {fileID: 21300000, guid: 860f22a42186316429bc10367be966f9, type: 3}
+  angle: 0
