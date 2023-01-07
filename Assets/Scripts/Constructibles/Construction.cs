@@ -34,24 +34,17 @@ public class Construction : ScriptableObject//, Construction
         for(int i = 0; i < conn.Count; i++)
         {
             points[2*i] = pos;
-            points[2*i + 1] =conn[i].getPos();
+            points[2*i + 1] = conn[i].getPos();
         }
-        Debug.Log(line);
+        line.positionCount = conn.Count;
         line.SetPositions(points);
     }
 
     public void Start()
     {
-        trs.position = pos;
-        Debug.Log(line);
-        Debug.Log(conections);
-        /*
-        line.positionCount = conections.Count*2;
-        for(int i = 0; i < conections.Count; i ++)
-        {
-            line.SetPosition(2*i, pos);
-            line.SetPosition(2*i+1, conections[i].getPos());
-        }*/
+     
+        
+       
     }
     
     public void FixedUpdate()

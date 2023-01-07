@@ -38,6 +38,30 @@ public class MasterWeb : MonoBehaviour
 		}
 	}
 
+	public static void defaultMap(string n)
+	{
+		int k = MasterWeb.instance.transform.childCount;
+		if(n == MasterWeb.instance.transform.GetChild(k-1).gameObject.name)
+		{
+			for(int i = 0; i < k; i++)
+			{
+				SolidObject so = MasterWeb.instance.transform.GetChild(i).gameObject.GetComponent<SolidObject>();
+				updateMap(so.consData);
+				so.conections.Add(MasterWeb.instance.transform.GetChild((i+k+1)%k).gameObject.GetComponent<SolidObject>().consData);
+				so.conections.Add(MasterWeb.instance.transform.GetChild((i+k-1)%k).gameObject.GetComponent<SolidObject>().consData);
+				List<Construction> conn = new List<Construction>();
+		        if(so.conections.Count > 0)
+		        {
+		            for(int j = 0; j < so.conections.Count; j++)
+		            {
+		                conn.Add((Construction)so.conections[j]);
+		            }
+		            so.consData.setConections(conn);
+		        }
+			}
+		}
+	}
+
 	public static void updateMap(Construction c)
 	{
 		map.Add(c);
@@ -47,6 +71,8 @@ public class MasterWeb : MonoBehaviour
 	{
 		return MasterWeb.map;
 	}
+
+
 
 
 }

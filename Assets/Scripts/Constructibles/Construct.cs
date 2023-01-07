@@ -18,7 +18,8 @@ public class Construct : MonoBehaviour
     public void webLine(Construction pad1, Construction pad2, Vector2 st, Vector2 dir, float range)
     {
         GameObject newWeb = Instantiate(constructions[1], st, new Quaternion(0, 0, 0, 0), MasterWeb.instance.gameObject.transform);
-        Web webAtr = Web.createWebPoint(pad1, pad2, st);
+		
+        Web webAtr = Web.createWebPoint(pad1, pad2, st, newWeb.GetComponent<LineRenderer>());
         webAtr.traceWeb(st, dir, range);
     }
 

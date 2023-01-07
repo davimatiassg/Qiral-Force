@@ -45,22 +45,27 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] Vector2 vel;
     [SerializeField] float acl = 0.01f;
     [SerializeField] float snapTol = 0.01f;
+
+    private bool started = true;
+
+    private float webCd = 0.5f;
     
-    void Start()
-    {
-        webP1 = (Construction) P1.consData;
-        webP2 = (Construction) P2.consData;
-    	wp = weaponPoint.GetComponent<WeaponHandler>();
-        trs = this.gameObject.GetComponent<Transform>();
-        spr = this.gameObject.GetComponent<SpriteRenderer>();
-        trail = this.gameObject.GetComponent<TrailRenderer>();
-        cons = this.gameObject.GetComponent<Construct>();
-        changeWeapon();
-        changeShip();
-    }
 
     void FixedUpdate()
-    {        
+    {   
+        if(started)
+        {
+            webP1 = P1.consData;
+            webP2 = P2.consData;
+            wp = weaponPoint.GetComponent<WeaponHandler>();
+            trs = this.gameObject.GetComponent<Transform>();
+            spr = this.gameObject.GetComponent<SpriteRenderer>();
+            trail = this.gameObject.GetComponent<TrailRenderer>();
+            cons = this.gameObject.GetComponent<Construct>();
+            changeWeapon();
+            changeShip();
+            started = false;
+        }
     	FrameControlls = P_Controll.PassInput();
         ////////////Movendo jogador
         
@@ -86,7 +91,10 @@ public class PlayerMov : MonoBehaviour
                         sd = Vector2.SignedAngle(vel, webP1conections[i].getPos() - webP1.getPos());
                     }
                 }
-                webP1 = webP1conections[idx];
+                if(webP1conections.Count >0)
+                {
+                    webP1 = webP1conections[idx];
+                }
                 if(dp1 + dp2 -dp3 > 5*snapTol)
                 {
                     trs.position = webP2.getPos();
@@ -104,8 +112,13 @@ public class PlayerMov : MonoBehaviour
                         sd = Vector2.SignedAngle(vel, webP2conections[i].getPos() - webP2.getPos());
                     }
                 }
+                //Debug.Log(idx);
+                //Debug.Log(webP2conections.Count);
                 vel = Vector2Extension.Rotate(vel, sd);
-                webP2 = webP2conections[idx];
+                if(webP2conections.Count >0)
+                {
+                    webP2 = webP2conections[idx];
+                }
                 if(dp1 + dp2 -dp3 > 5*snapTol)
                 {
                     trs.position = webP1.getPos();
@@ -136,8 +149,11 @@ public class PlayerMov : MonoBehaviour
         weaponPivot.transform.localEulerAngles = new Vector3(0, 0, a);
         weaponPoint.transform.localEulerAngles = new Vector3(0, 0, wp.angle);
         weaponPoint.transform.localPosition = Vector2.up*wp.range;	
-        LastFrameControlls = FrameControlls;
-
+        
+        if(webCd < 0.5f)
+        {
+            webCd += Time.fixedDeltaTime;
+        }
         ////////////Ações:
         //código de ataque vem aqui
         if(FrameControlls.AtkBtn)
@@ -150,12 +166,15 @@ public class PlayerMov : MonoBehaviour
             
         }
         //código habilidade vem aqui
-        if(FrameControlls.SklBtn)
+        if(FrameControlls.SklBtn && webCd >= 0.5f)
         {
+            webCd = 0f;
             Debug.Log("hellow");
             cons.webLine(webP1, webP2, trs.position, mouse, 50f);
 
         }
+
+        LastFrameControlls = FrameControlls;
     }
     public void changeWeapon()
     {

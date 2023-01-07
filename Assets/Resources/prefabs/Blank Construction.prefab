@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1438049641914657361}
   - component: {fileID: 8583236776643562009}
   m_Layer: 0
-  m_Name: webLine
+  m_Name: Blank Construction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,12 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1d74cd6676e6043989eeb7e16c93c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseData: {fileID: 11400000, guid: d756daeb7d7b683448159075ed6b6204, type: 2}
+  baseData: {fileID: 11400000, guid: bdc072e50f80f3d428ee8b8b32e5c441, type: 2}
   consData: {fileID: 0}
   pos: {x: 0, y: 0}
-  conections:
-  - {fileID: 0}
-  - {fileID: 0}
+  conections: []
 --- !u!120 &8583236776643562009
 LineRenderer:
   m_ObjectHideFlags: 0
