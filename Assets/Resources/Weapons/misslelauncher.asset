@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: misslelauncher
   m_EditorClassIdentifier: 
   weaponName: misslelauncher
-  range: 2
+  range: 1
   dmg: 5
   knb: 1
   cd: 0.2
