@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerMov : MonoBehaviour
 {
-    public float speed = 2.5f;
+    public float speed;
     public int life = 100;
 
     private Transform trs;
     private SpriteRenderer spr;
     private TrailRenderer trail;
+    private Construct cons;
 
     public GameObject weaponPoint;
     public Transform weaponPivot;
@@ -20,7 +21,6 @@ public class PlayerMov : MonoBehaviour
 
     public bool isAtk = false;
     public float atkCD = 0;
-    public float vel = 0;
     public Vector2 moment = Vector2.zero;
     public Vector2 pivotBack = Vector2.zero;
     public float angularmmt = 0;
@@ -37,6 +37,14 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] Vector2 WeaponPTg = Vector2.zero;
     [SerializeField] float WeaponATg = 0;
 
+
+    [SerializeField] Web webP1, webP2;
+    [SerializeField] Vector2 dir;
+    [SerializeField] float dp1, dp2, dp3;
+    [SerializeField] bool chgThread;
+    [SerializeField] Vector2 vel;
+    [SerializeField] float acl = 0.01f;
+    [SerializeField] float snapTol = 0.01f;
     
     void Start()
     {
@@ -44,77 +52,112 @@ public class PlayerMov : MonoBehaviour
         trs = this.gameObject.GetComponent<Transform>();
         spr = this.gameObject.GetComponent<SpriteRenderer>();
         trail = this.gameObject.GetComponent<TrailRenderer>();
+        cons = this.gameObject.GetComponent<Construct>();
         changeWeapon();
         changeShip();
     }
 
     void FixedUpdate()
     {
-    	FrameControlls = P_Controll.PassInput();
 
-		if(FrameControlls.movDir != LastFrameControlls.movDir && FrameControlls.movDir != Vector2.zero){
-			var (s, o) = Ship.getFace(FrameControlls.movDir);
-    		spr.sprite= s;
-    		trail.sortingOrder = o;
-    	}
-        trs.Translate(FrameControlls.movDir*speed);//andar marotamente
+        
+            
+        
+        
+    	FrameControlls = P_Controll.PassInput();
+        ////////////Movendo jogador
+        
+        
+        dp1 = Vector2.Distance(trs.position, webP1.pos);
+        dp2 = Vector2.Distance(trs.position, webP2.pos);
+        dp3 = Vector2.Distance(webP1.pos, webP2.pos);
+        if(dp1 + dp2 -dp3 > snapTol)
+        {
+            int idx = 0;
+            float d = 180;
+            float sd = 180;
+            Vector2 ndir;
+            float ag = 0;
+            if(dp1<dp2){
+                
+                webP2 = webP1;
+                for(int i = 0; i < webP1.conections.Count; i ++){
+                    ag = Vector2.Angle(vel, webP1.conections[i].pos - webP1.pos);
+                    if(ag < d){
+                        idx = i;
+                        d = ag;
+                        sd = Vector2.SignedAngle(vel, webP1.conections[i].pos - webP1.pos);
+                    }
+                }
+                webP1 = (Web)webP1.conections[idx];
+                if(dp1 + dp2 -dp3 > 5*snapTol)
+                {
+                    trs.position = webP2.pos;
+                }
+            }
+            else{
+            
+                webP1 = webP2;
+                for(int i = 0; i < webP2.conections.Count; i ++){
+                    ag = Vector2.Angle(vel, webP2.conections[i].pos - webP2.pos);
+                    if(ag < d){
+                        idx = i;
+                        d = ag;
+                        sd = Vector2.SignedAngle(vel, webP2.conections[i].pos - webP2.pos);
+                    }
+                }
+                vel = Vector2Extension.Rotate(vel, sd);
+                webP2 = (Web)webP2.conections[idx];
+                if(dp1 + dp2 -dp3 > 5*snapTol)
+                {
+                    trs.position = webP1.pos;
+                }
+            }
+        }
+
+        dir = (webP1.pos - webP2.pos).normalized;
+
+        vel = Vector3.Project(vel, dir);
+
+        vel = Vector2.ClampMagnitude(vel+(Vector2)Vector3.Project(FrameControlls.movDir, dir)*acl -vel.normalized*acl/5, speed);
+
+        trs.Translate(vel);
+
+        //Trocar Sprites
+        if(FrameControlls.movDir != LastFrameControlls.movDir && FrameControlls.movDir != Vector2.zero){
+            var (s, o) = Ship.getFace(FrameControlls.movDir);
+            spr.sprite = s;
+            trail.sortingOrder = o;
+        }
+
+        ////////////Movendo arma:
         Vector2 mouse = FrameControlls.weapDir;//coletar a posição atual do mouse
         float target = Vector2.SignedAngle(LastFrameControlls.weapDir, mouse);
-        if(FrameControlls.AtkBtn && atkCD <= 0)
-        {
-
-            if(atkCharge == Vector2.zero)
-            {
-                atkCharge = FrameControlls.weapDir;
-            }
-            //weaponPoint.transform.localPosition = Vector2.up*wp.range; 
-            //weaponPivot.transform.localEulerAngles = new Vector3(0, 0, Mathf.SmoothDampAngle(weaponPivot.transform.localEulerAngles.z, -Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up), ref angularmmt, 50*Time.fixedDeltaTime));
-            //weaponPoint.transform.localEulerAngles = Vector3.zero;
-
-        }
-        else if (LastFrameControlls.AtkBtn == true && atkCD <= 0)
-        {
-        	atkCD = wp.cd;
-            isAtk = true;
-            float a1 = Vector2.SignedAngle(atkCharge, Vector2.up);
-            float a2 = Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up);
-            float a = Mathf.DeltaAngle(a1, a2);
-            WeaponATg = -Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up);
-            pivotBack = weaponPivot.transform.localPosition;
-            angularmmt = 0;
-
-            //weaponPivot.transform.localEulerAngles = new Vector3(0, 0, -Vector2.SignedAngle(atkCharge, weaponPivot.transform.up) + Vector2.SignedAngle(atkCharge, Vector2.up)/10);
-            atkCharge = Vector2.zero;
-        }
-        else if(isAtk)
-        {
-        	//achar o ângulo entre o mouse do ultimo frame e o atual e adicionar o momentum a esse ângulo
-        	//weaponPoint.transform.localPosition = Vector2.SmoothDamp(weaponPivot.transform.localPosition, wp.range*Vector2.up, ref moment, atkCD/5);
-            //Debug.Log("Ângulo: " + weaponPivot.localEulerAngles.z + "°; Alvo: " +WeaponATg+"°.");
-        	float a = Mathf.SmoothDampAngle(weaponPivot.localEulerAngles.z, WeaponATg, ref angularmmt, 2*Time.fixedDeltaTime);
-            weaponPivot.transform.localPosition = Vector2.SmoothDamp(weaponPivot.transform.localPosition, -pivotBack.normalized*wp.range, ref moment, 2*Time.fixedDeltaTime);
-	        weaponPivot.localEulerAngles = new Vector3(0, 0, a);
-
-	        atkCD -= Time.fixedDeltaTime;
-	        if(atkCD <= 0)
-	        {
-	        	isAtk = false;
-                pivotBack = Vector2.zero;
-	        }
-        }
-        else
-        {
-        	
-        	weaponPivot.transform.localPosition = Vector2.SmoothDamp(weaponPivot.transform.localPosition, wp.range*mouse, ref moment, 10*Time.fixedDeltaTime);
-            float a = Mathf.SmoothDampAngle(weaponPivot.localEulerAngles.z, -Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up), ref angularmmt, 10*Time.fixedDeltaTime);
-            //Debug.Log("Ângulo: " + weaponPivot.localEulerAngles.z + "°; Alvo: " +(-Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up))+"°.");
-        	weaponPivot.transform.localEulerAngles = new Vector3(0, 0, a);
-        	weaponPoint.transform.localEulerAngles = new Vector3(0, 0, wp.angle);
-            weaponPoint.transform.localPosition = Vector2.up*wp.range;
-            
-        	
-        }
+        weaponPivot.transform.localPosition = Vector2.SmoothDamp(weaponPivot.transform.localPosition, wp.range*mouse, ref moment, 10*Time.fixedDeltaTime);
+        float a = Mathf.SmoothDampAngle(weaponPivot.localEulerAngles.z, -Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up), ref angularmmt, 10*Time.fixedDeltaTime);
+        weaponPivot.transform.localEulerAngles = new Vector3(0, 0, a);
+        weaponPoint.transform.localEulerAngles = new Vector3(0, 0, wp.angle);
+        weaponPoint.transform.localPosition = Vector2.up*wp.range;	
         LastFrameControlls = FrameControlls;
+
+        ////////////Ações:
+        //código de ataque vem aqui
+        if(FrameControlls.AtkBtn)
+        {
+            
+        }
+        //código defesa vem aqui
+        if(FrameControlls.DefBtn)
+        {
+            
+        }
+        //código habilidade vem aqui
+        if(FrameControlls.SklBtn)
+        {
+            Debug.Log("hellow");
+            cons.webLine(webP1, webP2, trs.position, mouse, 50f);
+
+        }
     }
     public void changeWeapon()
     {
@@ -155,13 +198,5 @@ public class PlayerMov : MonoBehaviour
     		trail.sortingOrder = o;
     }
 
-    public void PrepAtk()
-    {
-
- 		
-    }
-    public void CancelAtk()
-    {
-    	atkCharge = Vector2.zero;
-    }
+    
 }
