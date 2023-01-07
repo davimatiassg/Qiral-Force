@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6567305265759334869}
-  - component: {fileID: 1438049641914657361}
+  - component: {fileID: 7488000138888288549}
   - component: {fileID: 8583236776643562009}
   m_Layer: 0
   m_Name: webLine
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1438049641914657361
+--- !u!114 &7488000138888288549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,15 +42,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 999373848219938715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f1d74cd6676e6043989eeb7e16c93c4, type: 3}
+  m_Script: {fileID: 11500000, guid: cb4462835b8d5574ea94803ecced4a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseData: {fileID: 11400000, guid: d756daeb7d7b683448159075ed6b6204, type: 2}
-  consData: {fileID: 0}
+  line: {fileID: 0}
+  trs: {fileID: 6567305265759334869}
   pos: {x: 0, y: 0}
-  conections:
-  - {fileID: 0}
-  - {fileID: 0}
+  conections: []
 --- !u!120 &8583236776643562009
 LineRenderer:
   m_ObjectHideFlags: 0
