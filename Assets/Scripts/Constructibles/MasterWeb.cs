@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class MasterWeb : MonoBehaviour
 {
-	public static List<Constructible> map = new List<Constructible>();
+	public static List<Construction> map = new List<Construction>();
 
-	public List<Constructible> publicMap = new List<Constructible>();
+	public List<Construction> publicMap = new List<Construction>();
 
 	public static MasterWeb instance;
 
-	public static List<Constructible> findClosestConstructs(Constructible target, float range)
+	public int WebSize;
+
+	public static List<Construction> findClosestConstructs(Construction target, float range)
 	{
-		List<Constructible> l = new List<Constructible>();
-		foreach(Constructible mapT in map)
+		List<Construction> l = new List<Construction>();
+		foreach(Construction mapT in map)
 		{
-			if((target.pos - mapT.pos).magnitude < range)
+			if((target.getPos() - mapT.getPos()).magnitude < range)
 			{
 				l.Add(mapT);
 			}
@@ -36,13 +38,41 @@ public class MasterWeb : MonoBehaviour
 		}
 	}
 
-	public static void updateMap(Constructible c)
+	public static void defaultMap(string n)
+	{
+		int k = MasterWeb.instance.transform.childCount;
+		if(n == MasterWeb.instance.transform.GetChild(k-1).gameObject.name)
+		{
+			for(int i = 0; i < k; i++)
+			{
+				SolidObject so = MasterWeb.instance.transform.GetChild(i).gameObject.GetComponent<SolidObject>();
+				updateMap(so.consData);
+				so.conections.Add(MasterWeb.instance.transform.GetChild((i+k+1)%k).gameObject.GetComponent<SolidObject>().consData);
+				so.conections.Add(MasterWeb.instance.transform.GetChild((i+k-1)%k).gameObject.GetComponent<SolidObject>().consData);
+				List<Construction> conn = new List<Construction>();
+		        if(so.conections.Count > 0)
+		        {
+		            for(int j = 0; j < so.conections.Count; j++)
+		            {
+		                conn.Add((Construction)so.conections[j]);
+		            }
+		            so.consData.setConections(conn);
+		        }
+			}
+		}
+	}
+
+	public static void updateMap(Construction c)
 	{
 		map.Add(c);
 	}
 
-	public List<Constructible> getMap()
+	public List<Construction> getMap()
 	{
 		return MasterWeb.map;
 	}
+
+
+
+
 }

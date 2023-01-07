@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Constructible : MonoBehaviour
+public interface Constructible
 {
-    [SerializeField] public LineRenderer line;
-	[SerializeField] public Transform trs;
-    [SerializeField] public Vector2 pos;
-	[SerializeField] public List<Constructible> conections;
-
-	public webEffect active;
-
+    Vector2 getPos();
+    void setPos(Vector2 pos);
+    List<Constructible> getConections();
+    void setConections(List<Constructible> conn);
+}
+/*
     void Start()
     {
         trs = this.gameObject.GetComponent<Transform>();
@@ -23,7 +22,7 @@ public class Constructible : MonoBehaviour
             line.SetPosition(2*i+1, conections[i].pos);
         }
     }
-    /*
+    
     void FixedUpdate()
     {
     	foreach(Constructible c in conections)
@@ -36,6 +35,6 @@ public class Constructible : MonoBehaviour
     	}
     }
 
-*/
 
-}
+
+}*/
