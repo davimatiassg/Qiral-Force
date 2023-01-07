@@ -6,6 +6,7 @@ public class Behaviour : MonoBehaviour
 {
 
     public GameObject coin;
+    public GameObject Bullet;
     public Transform player;
     public Transform core;
     public string tipo;
@@ -62,9 +63,14 @@ public class Behaviour : MonoBehaviour
     {
         for (int i = 0;i < qnt;i ++)
         {
-            Vector3 rndPos = new Vector3 (Random.Range(-3,3),Random.Range(-3,3),0);
+            Vector3 rndPos = new Vector3 (Random.Range(-2,2),Random.Range(-2,2),0);
             Instantiate(coin,transform.position + rndPos,transform.rotation);
         }
+    }
+
+    public void takeDmg(float dmg,Vector2 knb)
+    {
+        hp -= dmg;
     }
 
     ///////Movements
@@ -137,6 +143,23 @@ public class Behaviour : MonoBehaviour
         
     }
 
+    //Attacks
+
+    private float firingRate = 0.2f;//em segundos
+    private float rFire = 0;
+    void shoot(GameObject bullet,Vector2 pos)
+    {
+        if (rFire <= 0)
+        {
+            GameObject shot = Instantiate(bullet,transform.position,transform.rotation);
+            shot.GetComponent<BulletScript>().dir = (player.position - transform.position).normalized;
+            shot.GetComponent<BulletScript>().target = "Player";
+            shot.GetComponent<SpriteRenderer>().color = new Color(0.5f,0f,0.5f,1f);
+            rFire = firingRate;
+        }
+        rFire -= Time.deltaTime;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -155,17 +178,16 @@ public class Behaviour : MonoBehaviour
 
         if (Vector3.Distance(transform.position,core.position) <= 0.5f)
         {
-            hp = 0;
-            //core.takeDmg()
-            //Destroy(this.gameObject);
+            GameObject.FindGameObjectWithTag("Core").GetComponent<GameWeb>().takeDmg(dmg,Vector2.zero);
+            Destroy(this.gameObject);
         }
 
         if (tipo == "Janinha")
         {
             JaninhaMov();
-            if (Vector3.Distance(transform.position,player.position) >= atkRange)
+            if (Vector3.Distance(transform.position,player.position) <= atkRange)
             {
-                //deal damage
+                GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().takeDmg(dmg*Time.deltaTime,Vector2.zero);
             }
         }
 
@@ -174,7 +196,7 @@ public class Behaviour : MonoBehaviour
             if (Vector3.Distance(transform.position,player.position) <= atkRange
              && Vector2.Distance(transform.position,core.position) >= Vector2.Distance(player.position,core.position))
             {
-                //deal damage
+                shoot(Bullet,(player.position - transform.position).normalized);
             }
             else {
                 AbelhaMov();
