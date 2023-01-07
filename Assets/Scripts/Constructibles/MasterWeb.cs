@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class MasterWeb : MonoBehaviour
 {
-	public static List<Constructible> map = new List<Constructible>();
+	public static List<Construction> map = new List<Construction>();
 
-	public List<Constructible> publicMap = new List<Constructible>();
+	public List<Construction> publicMap = new List<Construction>();
 
 	public static MasterWeb instance;
 
-	public static List<Constructible> findClosestConstructs(Constructible target, float range)
+	public int WebSize;
+
+	public static List<Construction> findClosestConstructs(Construction target, float range)
 	{
-		List<Constructible> l = new List<Constructible>();
-		foreach(Constructible mapT in map)
+		List<Construction> l = new List<Construction>();
+		foreach(Construction mapT in map)
 		{
-			if((target.pos - mapT.pos).magnitude < range)
+			if((target.getPos() - mapT.getPos()).magnitude < range)
 			{
 				l.Add(mapT);
 			}
@@ -36,13 +38,15 @@ public class MasterWeb : MonoBehaviour
 		}
 	}
 
-	public static void updateMap(Constructible c)
+	public static void updateMap(Construction c)
 	{
 		map.Add(c);
 	}
 
-	public List<Constructible> getMap()
+	public List<Construction> getMap()
 	{
 		return MasterWeb.map;
 	}
+
+
 }
