@@ -6,6 +6,13 @@ using UnityEngine.SceneManagement;
 public class MidGameExitScript : MonoBehaviour
 {
 
+    public void TryAgain()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("GameScene");
+        Time.timeScale = 1f;
+    }
+
     public void exitToMenu()
     {
         SceneManager.LoadScene("MenuScene");

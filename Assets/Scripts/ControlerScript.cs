@@ -55,9 +55,10 @@ public class ControllerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
         audioPlayer.volume = PlayerPrefs.GetFloat("volume");
 
-        AddCoins(0);
+        AddCoins(coins);
         coreHpMax = GameObject.FindGameObjectWithTag("Core").GetComponent<GameWeb>().hp;
         playerHpMax = GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().hp;
         updateCoreHp(coreHpMax);

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Spider1
   m_EditorClassIdentifier: 
   SpiderName: Spider1
-  speed: 15
+  speed: 40
   life: 100
   sprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 82df3391dbcf49940afc7edabcf2741e, type: 3}
+  - {fileID: 21300000, guid: cbbe9cb37d9276246952f411663050c0, type: 3}
+  - {fileID: 21300000, guid: 7c452a89bfa6c5940bec8d829f7a0921, type: 3}
+  - {fileID: 21300000, guid: 34af3b50d02990d40a37969700868cab, type: 3}
