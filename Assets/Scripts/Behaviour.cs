@@ -10,6 +10,7 @@ public class Behaviour : MonoBehaviour
     public GameObject Bullet;
     public Transform player;
     public Transform core;
+    public Animator anim;
     public string tipo;
     public float hp = 10;
     public float spd = 1.5f;
@@ -127,6 +128,7 @@ public class Behaviour : MonoBehaviour
             if (rJmp <= 0)
             {
                 playAudio("gafanhotoJump");
+                anim.Play("jump");
                 switch(Random.Range(0, 3))
                 {
                     case 0:
@@ -151,6 +153,7 @@ public class Behaviour : MonoBehaviour
         }
         else { //else, just keep moving forward
             transform.position = Vector3.MoveTowards(transform.position, core.position, spd*Time.deltaTime);
+            anim.Play("idle");
         }
 
         if (rJmp > 0) {rJmp -= Time.deltaTime;}
@@ -218,6 +221,13 @@ public class Behaviour : MonoBehaviour
         audioPlayer = GameObject.FindGameObjectWithTag("EnemyAudioPlayer");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         core = GameObject.FindGameObjectWithTag("Core").transform;
+        anim = this.gameObject.GetComponent<Animator>();
+    }
+
+    public void Die()
+    {
+        dropCoins(coins);
+        Destroy(this.gameObject);
     }
 
     // Update is called once per frame
@@ -225,9 +235,9 @@ public class Behaviour : MonoBehaviour
     {
         if (hp <= 0)
         {
-            dropCoins(coins);
             playAudio(tipo.ToLower() + "Die");
-            Destroy(this.gameObject);
+            anim.Play("die");
+            Die();
         }
 
         if (Vector3.Distance(transform.position,core.position) <= 0.5f)
