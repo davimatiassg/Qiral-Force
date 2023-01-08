@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e77261f99005b4418cbb3b46e0210b2, type: 3}
-  m_Name: machinegun
+  m_Name: gun
   m_EditorClassIdentifier: 
-  weaponName: machinegun
-  spr: {fileID: 21300000, guid: 35b71126bbf49444d9cc2c03817deb7c, type: 3}
-  Cd: 0.03
-  Shot: {fileID: 7396065257648407025, guid: 2d2c21046f2a9d64dab5b433ec69f788, type: 3}
+  weaponName: gun
+  spr: {fileID: 21300000, guid: 410d1ae422c8a5845b7f531b3999798d, type: 3}
+  Cd: 0.15
+  Shot: {fileID: 7396065257648407025, guid: bcde51dcbe91b4241a6768b5b9cd952d, type: 3}

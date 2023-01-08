@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e77261f99005b4418cbb3b46e0210b2, type: 3}
-  m_Name: lazerbeam
+  m_Script: {fileID: 11500000, guid: f29af8d1a6452034ea306ac824565508, type: 3}
+  m_Name: Spider1
   m_EditorClassIdentifier: 
-  weaponName: lazerbeam
-  spr: {fileID: 21300000, guid: 860f22a42186316429bc10367be966f9, type: 3}
-  Cd: 0.01
-  Shot: {fileID: 7396065257648407025, guid: 8f82ada0a29e23d4bbf448c64722bd46, type: 3}
+  SpiderName: Spider1
+  speed: 15
+  life: 100
+  sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

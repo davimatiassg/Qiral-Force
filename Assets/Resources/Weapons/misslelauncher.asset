@@ -13,11 +13,6 @@ MonoBehaviour:
   m_Name: misslelauncher
   m_EditorClassIdentifier: 
   weaponName: misslelauncher
-  range: 1
-  dmg: 5
-  knb: 1
-  cd: 0.2
-  arc: 150
-  acel: 1
   spr: {fileID: 21300000, guid: 4fec8375259c9344b81e95192c20089d, type: 3}
-  angle: -0.5
+  Cd: 0.5
+  Shot: {fileID: 7396065257648407025, guid: f36ad1891723f4743bd91743a0a69072, type: 3}

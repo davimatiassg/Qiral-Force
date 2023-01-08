@@ -47,25 +47,28 @@ public class WebShot : Web, ISolidObj
 
     void ISolidObj.touchLine(Construction Evtx1, Construction Evtx2)
     {
-        Debug.Log("yahoo?Line");
+        if(((Vector2)trs.position-startPoint).magnitude > 5f)
+        {
+            Debug.Log("yahoo?Line");
 
-        Web substrate = SpawnWebThread();
-        if((Evtx1 != Svtx1 && Evtx1 != Svtx2) ||(Evtx2 != Svtx1 && Evtx2 != Svtx2))
-        {
-            Evtx1.connections.Remove(Evtx2);
-            Evtx2.connections.Remove(Evtx1);    
-            
-            List<Construction> newConnections = new List<Construction>(); 
-            newConnections.Add(Evtx1);
-            newConnections.Add(Evtx2);
-            newConnections.Add(substrate);
-            Construct.webLine(newConnections, pos-dir);
-            
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Destroy(substrate.trs.gameObject);
+            Web substrate = SpawnWebThread();
+            if((Evtx1 != Svtx1 && Evtx1 != Svtx2) ||(Evtx2 != Svtx1 && Evtx2 != Svtx2))
+            {
+                Evtx1.connections.Remove(Evtx2);
+                Evtx2.connections.Remove(Evtx1);    
+                
+                List<Construction> newConnections = new List<Construction>(); 
+                newConnections.Add(Evtx1);
+                newConnections.Add(Evtx2);
+                newConnections.Add(substrate);
+                Construct.webLine(newConnections, pos-dir);
+                
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Destroy(substrate.trs.gameObject);
+            }
         }
     }
 
