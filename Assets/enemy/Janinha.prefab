@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2153834076773863412}
   - component: {fileID: 2153834076773863411}
   - component: {fileID: 2153834076773863410}
-  - component: {fileID: 5041511918674734881}
-  - component: {fileID: -8305118182219987941}
+  - component: {fileID: 3856882653633666513}
+  - component: {fileID: -3637924490058949905}
   m_Layer: 0
-  m_Name: Gafanhoto
+  m_Name: Janinha
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.07318282, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,16 +103,16 @@ MonoBehaviour:
   Bullet: {fileID: 0}
   player: {fileID: 0}
   core: {fileID: 0}
-  tipo: Gafanhoto
+  tipo: Janinha
   hp: 3
   spd: 1.5
   dmg: 1
   atkRange: 1.5
-  coins: 3
+  coins: 1
   momentum: {x: 0, y: 0, z: 0}
   Casulo: {fileID: 0}
   Demonio: {fileID: 0}
---- !u!61 &5041511918674734881
+--- !u!61 &3856882653633666513
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,9 +138,9 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!95 &-8305118182219987941
+--- !u!95 &-3637924490058949905
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -157,4 +157,4 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0

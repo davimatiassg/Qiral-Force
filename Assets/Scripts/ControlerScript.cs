@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ControllerScript : MonoBehaviour
 {
+
     private float playerHp;
     private float coreHp;
     public int coins = 0;
@@ -12,10 +13,23 @@ public class ControllerScript : MonoBehaviour
     public Text coreUI;
     public Text playerUI;
 
+    public AudioSource audioPlayer;
+    public AudioClip coinGet;
+
+    public void playAudio(string audio)
+    {
+        switch(audio)
+        {
+            case "coinGet": audioPlayer.clip = coinGet; break;
+        }
+        audioPlayer.Play(0);
+    }
+
     public void AddCoins(int qnt)
     {
         coins += qnt;
         coinsUI.text = "Coins: " + coins.ToString();
+        if (qnt > 0) {playAudio("coinGet");}
     }
 
     public void updateCoreHp(float hp)

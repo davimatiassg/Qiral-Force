@@ -32,7 +32,7 @@ public class CoinScript : MonoBehaviour
         //Coin spinning
         transform.localScale = new Vector3(Mathf.Sin(rCoin),1,1);
         if (rCoin >= Mathf.PI*2) {rCoin = 0;}
-        rCoin += Time.deltaTime;
+        rCoin += 10*Time.deltaTime;
 
         //Movement
         spd += acel*Time.deltaTime;

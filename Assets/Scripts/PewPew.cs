@@ -30,6 +30,7 @@ public class PewPew : MonoBehaviour
                 GameObject shot = Instantiate(bullet,transform.position,transform.rotation);
 
                 Vector2 mouse = new Vector2(Input.mousePosition.x - Screen.width/2, Input.mousePosition.y - Screen.height/2);
+                shot.GetComponent<BulletScript>().dmg = 1f;
                 shot.GetComponent<BulletScript>().dir = (mouse - (Vector2) transform.position).normalized;
                 shot.GetComponent<BulletScript>().target = "Enemy";
                 rFire = firingRate;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Behaviour : MonoBehaviour
 {
 
+    private GameObject audioPlayer;
     public GameObject coin;
     public GameObject Bullet;
     public Transform player;
@@ -22,8 +23,8 @@ public class Behaviour : MonoBehaviour
     //Baguis da lagarta/casulo/demonio
     public GameObject Casulo;
     public GameObject Demonio;
-    private static float metamorphosisTime = 5f;//em segundos
-    private float growSpd = 1f/metamorphosisTime;
+    private float metamorphosisTime = 7f;//em segundos
+    private float growSpd = 1f/7f; // 1/tempo da metamorfose
 
     //Math functions
 
@@ -80,6 +81,12 @@ public class Behaviour : MonoBehaviour
         momentum += (Vector3) knb;
     }
 
+    void playAudio(string audio)
+    {
+        audioPlayer.GetComponent<enemyAudioScript>().playAudio(audio);
+        //talvez mais coisas
+    }
+
     ///////Movements
 
     void JaninhaMov()
@@ -119,6 +126,7 @@ public class Behaviour : MonoBehaviour
         {
             if (rJmp <= 0)
             {
+                playAudio("gafanhotoJump");
                 switch(Random.Range(0, 3))
                 {
                     case 0:
@@ -174,13 +182,28 @@ public class Behaviour : MonoBehaviour
 
     //Attacks
 
+    private float atkRate = 0.75f;
+    private float rAtk = 0f;
+    void JaninhaAtk()
+    {
+        if (rAtk <= 0)
+        {
+            playAudio("janinhaAtk");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().takeDmg(dmg,Vector2.zero);
+            rAtk = atkRate;
+        }
+        rAtk -= Time.deltaTime;
+    }
+
     private float firingRate = 0.2f;//em segundos
     private float rFire = 0;
     void AbelhaFire(GameObject bullet,Vector2 pos)
     {
         if (rFire <= 0)
         {
+            playAudio("abelhaFire");
             GameObject shot = Instantiate(bullet,transform.position,transform.rotation);
+            shot.GetComponent<BulletScript>().dmg = dmg;
             shot.GetComponent<BulletScript>().dir = (player.position - transform.position).normalized;
             shot.GetComponent<BulletScript>().target = "Player";
             shot.GetComponent<SpriteRenderer>().color = new Color(0.5f,0f,0.5f,1f);
@@ -192,6 +215,7 @@ public class Behaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioPlayer = GameObject.FindGameObjectWithTag("EnemyAudioPlayer");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         core = GameObject.FindGameObjectWithTag("Core").transform;
     }
@@ -202,6 +226,7 @@ public class Behaviour : MonoBehaviour
         if (hp <= 0)
         {
             dropCoins(coins);
+            playAudio(tipo.ToLower() + "Die");
             Destroy(this.gameObject);
         }
 
@@ -218,7 +243,7 @@ public class Behaviour : MonoBehaviour
             JaninhaMov();
             if (Vector3.Distance(transform.position,player.position) <= atkRange)
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().takeDmg(dmg*Time.deltaTime,Vector2.zero);
+                JaninhaAtk();
             }
         }
 
@@ -267,7 +292,7 @@ public class Behaviour : MonoBehaviour
         if (tipo == "Casulo")
         {
             transform.localScale = new Vector3(transform.localScale.x + growSpd*Time.deltaTime,transform.localScale.x + growSpd*Time.deltaTime,1);
-            Debug.Log("oi");
+            Debug.Log("oi" + ((int) metamorphosisTime).ToString());
             if (metamorphosisTime <= 0)
             {
                 Instantiate(Demonio,transform.position,transform.rotation);
