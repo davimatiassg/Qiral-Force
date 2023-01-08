@@ -24,6 +24,7 @@ public class GamePlayer : MonoBehaviour
         if (hp <= 0f)
         {
             hp = 0f;
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().updatePlayerHp(hp);
         }
     }
 }

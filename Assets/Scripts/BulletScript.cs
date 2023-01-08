@@ -15,8 +15,11 @@ public class BulletScript : MonoBehaviour
     {
         if (collision.gameObject.tag == target)
         {
+            Vector2 knbDir = (collision.gameObject.transform.position - transform.position).normalized;
+            float knbStrenght = 0f; //Knockback n ficou legal sla
+
             if (target == "Player") {collision.gameObject.GetComponent<GamePlayer>().takeDmg(dmg,Vector2.zero);}
-            if (target == "Enemy") {collision.gameObject.GetComponent<Behaviour>().takeDmg(dmg,Vector2.zero);}
+            if (target == "Enemy") {collision.gameObject.GetComponent<Behaviour>().takeDmg(dmg,knbDir*knbStrenght);}
             Destroy(this.gameObject);
         }
 

@@ -22,6 +22,10 @@ public class GameWeb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (hp <= 0)
+        {
+            hp = 0;
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().updateCoreHp(hp);
+        }
     }
 }

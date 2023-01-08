@@ -19,6 +19,12 @@ public class Behaviour : MonoBehaviour
     [SerializeField] private Vector3 momentum = new Vector3(0,0,0);
     private float atrito = 1f;
 
+    //Baguis da lagarta/casulo/demonio
+    public GameObject Casulo;
+    public GameObject Demonio;
+    private static float metamorphosisTime = 5f;//em segundos
+    private float growSpd = 1f/metamorphosisTime;
+
     //Math functions
 
     float sign(float v)
@@ -71,6 +77,7 @@ public class Behaviour : MonoBehaviour
     public void takeDmg(float dmg,Vector2 knb)
     {
         hp -= dmg;
+        momentum += (Vector3) knb;
     }
 
     ///////Movements
@@ -90,7 +97,7 @@ public class Behaviour : MonoBehaviour
             Vector2 speed = new Vector2 (transform.position.x - future_pos.x, transform.position.y - future_pos.y);
             speed = Vector2.Perpendicular(speed)*Random.Range(0.5f,1f);
             
-            if (Random.Range(0f,1f) > 0.5f) {speed *= -1;}
+            if (Random.Range(0,2) == 0) {speed *= -1;} //50% chance
 
             momentum = new Vector3 (speed.x,speed.y,0)*zigZagStrenght;
         }   
@@ -143,11 +150,33 @@ public class Behaviour : MonoBehaviour
         
     }
 
+    private Vector2 wanderDir = Vector2.zero;
+    private int wanderRate = 100;
+    void BraboletaMov()
+    {
+        if (Random.Range(0, wanderRate) == 0)
+        {
+            if (Random.Range(0, 2) == 0) //50% chance
+            {
+                wanderDir = new Vector2(Random.Range(-1f,1f),Random.Range(-1f,1f)).normalized;
+            }
+            else {
+                wanderDir = (player.position - transform.position).normalized;
+            }
+        }
+        transform.position += (Vector3) wanderDir*Time.deltaTime*spd;
+    }
+
+    void DemonioMov()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, player.position, spd*Time.deltaTime);
+    }
+
     //Attacks
 
     private float firingRate = 0.2f;//em segundos
     private float rFire = 0;
-    void shoot(GameObject bullet,Vector2 pos)
+    void AbelhaFire(GameObject bullet,Vector2 pos)
     {
         if (rFire <= 0)
         {
@@ -182,6 +211,8 @@ public class Behaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        //Movement
+
         if (tipo == "Janinha")
         {
             JaninhaMov();
@@ -196,7 +227,7 @@ public class Behaviour : MonoBehaviour
             if (Vector3.Distance(transform.position,player.position) <= atkRange
              && Vector2.Distance(transform.position,core.position) >= Vector2.Distance(player.position,core.position))
             {
-                shoot(Bullet,(player.position - transform.position).normalized);
+                AbelhaFire(Bullet,(player.position - transform.position).normalized);
             }
             else {
                 AbelhaMov();
@@ -206,6 +237,51 @@ public class Behaviour : MonoBehaviour
         if (tipo == "Gafanhoto")
         {
             GafanhotoMov();
+        }
+
+        if (tipo == "Besouro")
+        {
+            JaninhaMov(); //é o mesmo tipo de movimento q a janinha
+        }
+
+        if (tipo == "Braboleta")
+        {
+            BraboletaMov();
+            if (Vector3.Distance(transform.position,player.position) <= atkRange)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().takeDmg(dmg*Time.deltaTime,Vector2.zero);
+                Debug.Log("Dano de braboleta!!!!!!!!!!!!");
+            }
+        }
+
+        if (tipo == "Lagarta")
+        {
+            JaninhaMov(); //é o mesmo tipo de movimento q a janinha
+            if (Vector3.Distance(transform.position,player.position) <= atkRange)
+            {
+                Instantiate(Casulo,transform.position,transform.rotation);
+                Destroy(this.gameObject);
+            }
+        }
+
+        if (tipo == "Casulo")
+        {
+            transform.localScale = new Vector3(transform.localScale.x + growSpd*Time.deltaTime,transform.localScale.x + growSpd*Time.deltaTime,1);
+            if (metamorphosisTime <= 0)
+            {
+                Instantiate(Demonio,transform.position,transform.rotation);
+                Destroy(this.gameObject);
+            }
+            metamorphosisTime -= Time.deltaTime;
+        }
+
+        if (tipo == "Demonio")
+        {
+            DemonioMov();
+            if (Vector3.Distance(transform.position,player.position) <= atkRange)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().takeDmg(dmg*Time.deltaTime,Vector2.zero);
+            }
         }
 
         transform.position += momentum * Time.deltaTime;
