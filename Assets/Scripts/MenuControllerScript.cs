@@ -13,6 +13,7 @@ public class MenuControllerScript : MonoBehaviour
     {
         //SceneManager.GetActiveScene().buildIndex + 1
         SceneManager.LoadScene("GameScene");
+        Time.timeScale = 1f;
     }
 
     public void options()

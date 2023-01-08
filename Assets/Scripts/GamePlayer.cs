@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GamePlayer : MonoBehaviour
 {
+
+    public GameObject MainCanvas;
+    public GameObject GameOver;
+
     public float hp = 50f;
     
     public void takeDmg(float dmg,Vector2 knb)
@@ -19,6 +23,10 @@ public class GamePlayer : MonoBehaviour
         {
             hp = 0f;
             GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().updatePlayerHp(hp);
+
+            Time.timeScale = 0f;
+            MainCanvas.SetActive(false);
+            GameOver.SetActive(true);
         }
     }
 }

@@ -10,6 +10,10 @@ TagManager:
   - Options
   - Menu
   - EnemyAudioPlayer
+  - HealthBar
+  - MainCanvas
+  - OptionsCanvas
+  - OptionsCanvasController
   layers:
   - Default
   - TransparentFX
