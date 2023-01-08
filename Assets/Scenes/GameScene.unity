@@ -981,7 +981,6 @@ GameObject:
   - component: {fileID: 426025306}
   - component: {fileID: 426025305}
   - component: {fileID: 426025304}
-  - component: {fileID: 426025307}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -1016,17 +1015,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199383d4fb9f59149a062376ab663cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: 
-  col: {fileID: 0}
-  range: 3
-  dmg: 5
-  knb: 5
-  cd: 0
-  arc: 0
-  acel: 0
-  angle: 0
-  spr: {fileID: 0}
-  speed: {x: 0, y: 0}
+  spr: {fileID: 426025306}
+  trs: {fileID: 426025303}
+  Weapon: {fileID: 11400000, guid: d622b5a22ab235940a62e5ebb1ee251d, type: 2}
+  Cd: 0
 --- !u!60 &426025305
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1112,105 +1104,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!96 &426025307
-TrailRenderer:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426025302}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 0
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 71a9a95a6aec8394db03b09f20576cf1, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1
-  m_Time: 0.12
-  m_Parameters:
-    serializedVersion: 3
-    widthMultiplier: 1
-    widthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    colorGradient:
-      serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 65535
-      ctime2: 0
-      ctime3: 0
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
-    alignment: 0
-    textureMode: 0
-    shadowBias: 0.5
-    generateLightingData: 0
-  m_MinVertexDistance: 0.1
-  m_Autodestruct: 0
-  m_Emitting: 1
 --- !u!1 &518151249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,15 +1232,15 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.0011600928
-    y: 0.0024826217
-    width: 0.99767977
-    height: 0.99304867
+    x: 0.00089445437
+    y: 0.0019762847
+    width: 0.9982111
+    height: 0.9960475
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1832,10 +1725,9 @@ MonoBehaviour:
   life: 100
   weaponPoint: {fileID: 426025302}
   weaponPivot: {fileID: 618714815}
-  Weapon: {fileID: 11400000, guid: 48c1dae0a76a68943a1195903d7fd75e, type: 2}
-  Ship: {fileID: 11400000, guid: dda702d30dc561e49af1164b9f5ec2cd, type: 2}
+  Weapon: {fileID: 11400000, guid: 6e801a87c8b3a6f439e9b9c6d2247fbb, type: 2}
+  Spider: {fileID: 11400000, guid: 1a6873db905fa7d459ba256c98028d36, type: 2}
   isAtk: 0
-  atkCD: 0
   moment: {x: 0, y: 0}
   pivotBack: {x: 0, y: 0}
   angularmmt: 0
