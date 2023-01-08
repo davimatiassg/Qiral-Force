@@ -41,8 +41,8 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color1: {r: 2.270603, g: 1.6048764, b: 0, a: 0}
-    - _Color2: {r: 1, g: 0.26826465, b: 0, a: 0}
+    - _Color1: {r: 1.1353012, g: 0.8024381, b: 0, a: 0}
+    - _Color2: {r: 1, g: 0.009896934, b: 0, a: 0}
     - _DissolveSpeed: {r: 0.42, g: 0, b: 0, a: 0}
     - _MainTexSpeed: {r: -2.18, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
