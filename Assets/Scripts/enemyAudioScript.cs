@@ -62,17 +62,16 @@ public class enemyAudioScript : MonoBehaviour
         audioPlayer.Play(0);
     }
 
-    /*
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioPlayer.volume = PlayerPrefs.GetFloat("volume");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        audioPlayer.volume = PlayerPrefs.GetFloat("volume");
     }
-    */
 }
