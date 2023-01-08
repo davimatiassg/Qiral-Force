@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &999373848219938715
+--- !u!1 &6037178658106891259
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,54 +8,54 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6567305265759334869}
-  - component: {fileID: 7488000138888288549}
-  - component: {fileID: 8583236776643562009}
+  - component: {fileID: 870749919382640523}
+  - component: {fileID: 2353684913202214936}
+  - component: {fileID: 7789839762442059578}
   m_Layer: 0
-  m_Name: webLine
+  m_Name: WebPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6567305265759334869
+--- !u!4 &870749919382640523
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999373848219938715}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.61870897, y: 0.59934855, z: 0.8111437}
+  m_GameObject: {fileID: 6037178658106891259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7488000138888288549
+--- !u!114 &2353684913202214936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999373848219938715}
+  m_GameObject: {fileID: 6037178658106891259}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb4462835b8d5574ea94803ecced4a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  line: {fileID: 0}
-  trs: {fileID: 6567305265759334869}
+  trs: {fileID: 870749919382640523}
   pos: {x: 0, y: 0}
-  conections: []
---- !u!120 &8583236776643562009
+  connections: []
+  line: {fileID: 7789839762442059578}
+--- !u!120 &7789839762442059578
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999373848219938715}
+  m_GameObject: {fileID: 6037178658106891259}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -90,9 +90,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  m_Positions: []
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1

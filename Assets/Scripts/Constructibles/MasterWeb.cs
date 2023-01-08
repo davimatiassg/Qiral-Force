@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class MasterWeb : MonoBehaviour
 {
-	public static List<Constructible> map = new List<Constructible>();
+	public static List<Construction> map = new List<Construction>();
 
-	public List<Constructible> publicMap = new List<Constructible>();
+	public List<Construction> publicMap = new List<Construction>();
 
 	public static MasterWeb instance;
 
-	public static List<Constructible> findClosestConstructs(Constructible target, float range)
+	public int WebSize;
+
+	public static List<Construction> findClosestConstructs(Construction target, float range)
 	{
-		List<Constructible> l = new List<Constructible>();
-		foreach(Constructible mapT in map)
+		List<Construction> l = new List<Construction>();
+		foreach(Construction mapT in map)
 		{
-			if((target.pos - mapT.pos).magnitude < range)
+			if((target.getPos() - mapT.getPos()).magnitude < range)
 			{
 				l.Add(mapT);
 			}
@@ -36,13 +38,31 @@ public class MasterWeb : MonoBehaviour
 		}
 	}
 
-	public static void updateMap(Constructible c)
+	void Start()
+	{
+		int k = MasterWeb.instance.transform.childCount;
+		for(int i = 0; i < k; i++)
+		{
+			Construction so = MasterWeb.instance.transform.GetChild(i).gameObject.GetComponent<Construction>();
+			updateMap(so);
+			so.AddConnection(MasterWeb.instance.transform.GetChild((i+k+1)%k).gameObject.GetComponent<Construction>());
+			MasterWeb.instance.transform.GetChild((i+k+1)%k).gameObject.GetComponent<Construction>().AddConnection(so);
+			List<Construction> conn = new List<Construction>();
+		}
+
+	}
+
+	public static void updateMap(Construction c)
 	{
 		map.Add(c);
 	}
 
-	public List<Constructible> getMap()
+	public List<Construction> getMap()
 	{
 		return MasterWeb.map;
 	}
+
+
+
+
 }

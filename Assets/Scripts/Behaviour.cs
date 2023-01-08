@@ -267,6 +267,7 @@ public class Behaviour : MonoBehaviour
         if (tipo == "Casulo")
         {
             transform.localScale = new Vector3(transform.localScale.x + growSpd*Time.deltaTime,transform.localScale.x + growSpd*Time.deltaTime,1);
+            Debug.Log("oi");
             if (metamorphosisTime <= 0)
             {
                 Instantiate(Demonio,transform.position,transform.rotation);

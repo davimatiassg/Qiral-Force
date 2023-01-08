@@ -24,7 +24,7 @@ public class WeaponHandler : MonoBehaviour
 
     public void onTriggerEnter2D(Collider2D hit)
     {
-    	HitableObj hitObj = hit.gameObject.GetComponent<HitableObj>(); 
+    	IHitableObj hitObj = hit.gameObject.GetComponent<IHitableObj>(); 
     	if(hitObj != null)
     	{
     		hitObj.TakeDmg(dmg, knb*speed);

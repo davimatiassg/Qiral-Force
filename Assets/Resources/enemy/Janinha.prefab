@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2153834076773863411}
   - component: {fileID: 2153834076773863410}
   - component: {fileID: 3856882653633666513}
+  - component: {fileID: -3637924490058949905}
   m_Layer: 0
   m_Name: Janinha
   m_TagString: Enemy
@@ -99,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coin: {fileID: 3222283849385067035, guid: 3b1806e48cc251a4eae0ed730aa4cb42, type: 3}
+  Bullet: {fileID: 0}
   player: {fileID: 0}
   core: {fileID: 0}
   tipo: Janinha
@@ -108,6 +110,8 @@ MonoBehaviour:
   atkRange: 1.5
   coins: 1
   momentum: {x: 0, y: 0, z: 0}
+  Casulo: {fileID: 0}
+  Demonio: {fileID: 0}
 --- !u!61 &3856882653633666513
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -134,3 +138,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &-3637924490058949905
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153834076773863409}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

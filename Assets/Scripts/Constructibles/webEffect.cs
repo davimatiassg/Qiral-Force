@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface webEffect
 {
-    void causeEffect(HitableObj target);
+    void causeEffect(IHitableObj target);
 }

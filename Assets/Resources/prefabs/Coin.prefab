@@ -101,8 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   Controller: {fileID: 0}
-  spd: 0.5
-  acel: 3
+  spd: 25
+  acel: 0.00001
 --- !u!58 &3828514600108563497
 CircleCollider2D:
   m_ObjectHideFlags: 0

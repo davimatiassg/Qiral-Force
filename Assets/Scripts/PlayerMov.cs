@@ -10,7 +10,6 @@ public class PlayerMov : MonoBehaviour
     private Transform trs;
     private SpriteRenderer spr;
     private TrailRenderer trail;
-    private Construct cons;
 
     public GameObject weaponPoint;
     public Transform weaponPivot;
@@ -37,40 +36,38 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] Vector2 WeaponPTg = Vector2.zero;
     [SerializeField] float WeaponATg = 0;
 
-
-    [SerializeField] Web webP1, webP2;
+    [SerializeField] Construction webP1, webP2;
     [SerializeField] Vector2 dir;
     [SerializeField] float dp1, dp2, dp3;
     [SerializeField] bool chgThread;
     [SerializeField] Vector2 vel;
     [SerializeField] float acl = 0.01f;
     [SerializeField] float snapTol = 0.01f;
+
+    private bool started = true;
+
+    private float webCd = 0.5f;
     
-    void Start()
-    {
-    	wp = weaponPoint.GetComponent<WeaponHandler>();
-        trs = this.gameObject.GetComponent<Transform>();
-        spr = this.gameObject.GetComponent<SpriteRenderer>();
-        trail = this.gameObject.GetComponent<TrailRenderer>();
-        cons = this.gameObject.GetComponent<Construct>();
-        changeWeapon();
-        changeShip();
-    }
 
     void FixedUpdate()
-    {
-
-        
-            
-        
-        
+    {   
+        if(started)
+        {
+            wp = weaponPoint.GetComponent<WeaponHandler>();
+            trs = this.gameObject.GetComponent<Transform>();
+            spr = this.gameObject.GetComponent<SpriteRenderer>();
+            trail = this.gameObject.GetComponent<TrailRenderer>();
+            changeWeapon();
+            changeShip();
+            started = false;
+        }
     	FrameControlls = P_Controll.PassInput();
         ////////////Movendo jogador
         
         
-        dp1 = Vector2.Distance(trs.position, webP1.pos);
-        dp2 = Vector2.Distance(trs.position, webP2.pos);
-        dp3 = Vector2.Distance(webP1.pos, webP2.pos);
+        dp1 = Vector2.Distance(trs.position, webP1.getPos());
+        dp2 = Vector2.Distance(trs.position, webP2.getPos());
+        dp3 = Vector2.Distance(webP1.getPos(), webP2.getPos());
         if(dp1 + dp2 -dp3 > snapTol)
         {
             int idx = 0;
@@ -79,49 +76,56 @@ public class PlayerMov : MonoBehaviour
             Vector2 ndir;
             float ag = 0;
             if(dp1<dp2){
-                
+                List<Construction> webP1connections = webP1.getConnections();
                 webP2 = webP1;
-                for(int i = 0; i < webP1.conections.Count; i ++){
-                    ag = Vector2.Angle(vel, webP1.conections[i].pos - webP1.pos);
+                for(int i = 0; i < webP1connections.Count; i ++){
+                    ndir = webP1connections[i].getPos() - webP1.getPos();
+                    ag = Vector2.Angle(FrameControlls.movDir+vel.normalized/5,ndir);
                     if(ag < d){
                         idx = i;
                         d = ag;
-                        sd = Vector2.SignedAngle(vel, webP1.conections[i].pos - webP1.pos);
+                        sd = Vector2.SignedAngle(vel, ndir);
                     }
                 }
-                webP1 = (Web)webP1.conections[idx];
+                vel = Vector2Extension.Rotate(vel, sd*0.7f);
+                webP1 = webP1connections[idx];
                 if(dp1 + dp2 -dp3 > 5*snapTol)
                 {
-                    trs.position = webP2.pos;
+                    trs.position = webP2.getPos();
                 }
             }
             else{
             
                 webP1 = webP2;
-                for(int i = 0; i < webP2.conections.Count; i ++){
-                    ag = Vector2.Angle(vel, webP2.conections[i].pos - webP2.pos);
+                List<Construction> webP2connections = webP2.getConnections();
+                for(int i = 0; i < webP2connections.Count; i ++){
+                    ndir = webP2connections[i].getPos() - webP2.getPos();
+                    ag = Vector2.Angle(FrameControlls.movDir+vel.normalized/5, ndir);
                     if(ag < d){
                         idx = i;
                         d = ag;
-                        sd = Vector2.SignedAngle(vel, webP2.conections[i].pos - webP2.pos);
+                        sd = Vector2.SignedAngle(vel, ndir);
                     }
                 }
-                vel = Vector2Extension.Rotate(vel, sd);
-                webP2 = (Web)webP2.conections[idx];
+
+                vel = Vector2Extension.Rotate(vel, sd*0.7f);
+                webP2 = webP2connections[idx];
                 if(dp1 + dp2 -dp3 > 5*snapTol)
                 {
-                    trs.position = webP1.pos;
+                    trs.position = webP1.getPos();
                 }
             }
         }
 
-        dir = (webP1.pos - webP2.pos).normalized;
+
+        
+        dir = (webP1.getPos() - webP2.getPos()).normalized;
 
         vel = Vector3.Project(vel, dir);
 
         vel = Vector2.ClampMagnitude(vel+(Vector2)Vector3.Project(FrameControlls.movDir, dir)*acl -vel.normalized*acl/5, speed);
 
-        trs.Translate(vel);
+        trs.Translate(vel*Time.fixedDeltaTime);
 
         //Trocar Sprites
         if(FrameControlls.movDir != LastFrameControlls.movDir && FrameControlls.movDir != Vector2.zero){
@@ -138,8 +142,11 @@ public class PlayerMov : MonoBehaviour
         weaponPivot.transform.localEulerAngles = new Vector3(0, 0, a);
         weaponPoint.transform.localEulerAngles = new Vector3(0, 0, wp.angle);
         weaponPoint.transform.localPosition = Vector2.up*wp.range;	
-        LastFrameControlls = FrameControlls;
-
+        
+        if(webCd < 1f)
+        {
+            webCd += Time.fixedDeltaTime;
+        }
         ////////////Ações:
         //código de ataque vem aqui
         if(FrameControlls.AtkBtn)
@@ -152,12 +159,16 @@ public class PlayerMov : MonoBehaviour
             
         }
         //código habilidade vem aqui
-        if(FrameControlls.SklBtn)
+        if(FrameControlls.SklBtn && webCd >= 1f)
         {
+            webCd = 0f;
             Debug.Log("hellow");
-            cons.webLine(webP1, webP2, trs.position, mouse, 50f);
+            Construct.webShot((Vector2)trs.position + mouse, mouse, 50f, 30f, webP1, webP2);
 
         }
+
+
+        LastFrameControlls = FrameControlls;
     }
     public void changeWeapon()
     {
