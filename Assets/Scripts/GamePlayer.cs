@@ -12,12 +12,6 @@ public class GamePlayer : MonoBehaviour
         GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().updatePlayerHp(hp);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

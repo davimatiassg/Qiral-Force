@@ -16,10 +16,9 @@ public class PlayerMov : MonoBehaviour
     private WeaponHandler wp;
 
     public WeaponScriptable Weapon;
-	public ShipScriptable Ship;
+	public SpiderScriptable Spider;
 
     public bool isAtk = false;
-    public float atkCD = 0;
     public Vector2 moment = Vector2.zero;
     public Vector2 pivotBack = Vector2.zero;
     public float angularmmt = 0;
@@ -57,8 +56,8 @@ public class PlayerMov : MonoBehaviour
             trs = this.gameObject.GetComponent<Transform>();
             spr = this.gameObject.GetComponent<SpriteRenderer>();
             trail = this.gameObject.GetComponent<TrailRenderer>();
-            changeWeapon();
-            changeShip();
+            updateWeapon();
+            updateSpider();
             started = false;
         }
     	FrameControlls = P_Controll.PassInput();
@@ -129,7 +128,7 @@ public class PlayerMov : MonoBehaviour
 
         //Trocar Sprites
         if(FrameControlls.movDir != LastFrameControlls.movDir && FrameControlls.movDir != Vector2.zero){
-            var (s, o) = Ship.getFace(FrameControlls.movDir);
+            var (s, o) = Spider.getFace(FrameControlls.movDir);
             spr.sprite = s;
             trail.sortingOrder = o;
         }
@@ -137,11 +136,11 @@ public class PlayerMov : MonoBehaviour
         ////////////Movendo arma:
         Vector2 mouse = FrameControlls.weapDir;//coletar a posição atual do mouse
         float target = Vector2.SignedAngle(LastFrameControlls.weapDir, mouse);
-        weaponPivot.transform.localPosition = Vector2.SmoothDamp(weaponPivot.transform.localPosition, wp.range*mouse, ref moment, 10*Time.fixedDeltaTime);
+        weaponPivot.transform.localPosition = Vector2.SmoothDamp(weaponPivot.transform.localPosition, 0.9f*mouse, ref moment, 10*Time.fixedDeltaTime);
         float a = Mathf.SmoothDampAngle(weaponPivot.localEulerAngles.z, -Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up), ref angularmmt, 10*Time.fixedDeltaTime);
         weaponPivot.transform.localEulerAngles = new Vector3(0, 0, a);
-        weaponPoint.transform.localEulerAngles = new Vector3(0, 0, wp.angle);
-        weaponPoint.transform.localPosition = Vector2.up*wp.range;	
+        weaponPoint.transform.localEulerAngles = new Vector3(0, 0, -0.5f);
+        weaponPoint.transform.localPosition = Vector2.up*0.9f;	
         
         if(webCd < 1f)
         {
@@ -151,7 +150,7 @@ public class PlayerMov : MonoBehaviour
         //código de ataque vem aqui
         if(FrameControlls.AtkBtn)
         {
-            
+            wp.Shot(weaponPivot.transform.up);
         }
         //código defesa vem aqui
         if(FrameControlls.DefBtn)
@@ -163,48 +162,33 @@ public class PlayerMov : MonoBehaviour
         {
             webCd = 0f;
             Debug.Log("hellow");
-            Construct.webShot((Vector2)trs.position + mouse, mouse, 50f, 30f, webP1, webP2);
+            Construct.webShot(trs.position + weaponPivot.transform.up, weaponPivot.transform.up, 50f, 30f, webP1, webP2);
 
         }
 
 
         LastFrameControlls = FrameControlls;
     }
-    public void changeWeapon()
+    public void updateWeapon()
     {
     	changeWeapon(Weapon);
     }
     public void changeWeapon(WeaponScriptable w)
     {
-    	Weapon = w;
-    	wp.range = Weapon.range;
-    	wp.knb = Weapon.knb;
-    	wp.dmg = Weapon.dmg;
-    	wp.spr = Weapon.spr;
-    	wp.arc = Weapon.arc;
-    	wp.cd = Weapon.cd;
-    	wp.acel = Weapon.acel;
-    	wp.angle = Weapon.angle;
-    	weaponPoint.GetComponent<SpriteRenderer>().sprite = wp.spr;
-    	weaponPoint.GetComponent<PolygonCollider2D>().pathCount = wp.spr.GetPhysicsShapeCount();
-    	for(int i = 0; i < wp.spr.GetPhysicsShapeCount(); i++)
-    	{
-    		List<Vector2> points = new List<Vector2>();
-    		wp.spr.GetPhysicsShape(0, points);
-    		weaponPoint.GetComponent<PolygonCollider2D>().SetPath(i, points);
-    	}
+        wp.Weapon = w;
+    	wp.updateWeapon();
     }
 
-    public void changeShip()
+    public void updateSpider()
     {
-    	changeWeapon(Ship);
+    	changeSpider(Spider);
     }
-    public void changeWeapon(ShipScriptable s)
+    public void changeSpider(SpiderScriptable s)
     {
-    	Ship = s;
-    	life = Ship.life;
-    	speed = Ship.speed;
-    	var (ss, o) = Ship.getFace(FrameControlls.movDir);
+    	Spider = s;
+    	life = Spider.life;
+    	speed = Spider.speed;
+    	var (ss, o) = Spider.getFace(FrameControlls.movDir);
     		spr.sprite= ss;
     		trail.sortingOrder = o;
     }

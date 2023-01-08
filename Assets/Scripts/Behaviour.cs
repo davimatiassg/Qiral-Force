@@ -203,9 +203,9 @@ public class Behaviour : MonoBehaviour
         {
             playAudio("abelhaFire");
             GameObject shot = Instantiate(bullet,transform.position,transform.rotation);
-            shot.GetComponent<BulletScript>().dmg = dmg;
-            shot.GetComponent<BulletScript>().dir = (player.position - transform.position).normalized;
-            shot.GetComponent<BulletScript>().target = "Player";
+            shot.GetComponent<Bullet>().dmg = dmg;
+            shot.GetComponent<Bullet>().dir = (player.position - transform.position).normalized;
+            shot.GetComponent<Bullet>().target = "Player";
             shot.GetComponent<SpriteRenderer>().color = new Color(0.5f,0f,0.5f,1f);
             rFire = firingRate;
         }
