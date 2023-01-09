@@ -19,7 +19,6 @@ public class PlayerMov : MonoBehaviour
 
     public List<WeaponScriptable> weapons = new List<WeaponScriptable>();
     public int weaponIdx = 0;
-	public SpiderScriptable Spider;
 
     public bool isAtk = false;
     public Vector2 moment = Vector2.zero;
@@ -46,6 +45,8 @@ public class PlayerMov : MonoBehaviour
     [SerializeField] float acl = 0.01f;
     [SerializeField] float snapTol = 0.01f;
 
+    [SerializeField] Animator anim;
+
     private bool started = true;
 
     private float webCd = 0.5f;
@@ -59,8 +60,8 @@ public class PlayerMov : MonoBehaviour
             trs = this.gameObject.GetComponent<Transform>();
             spr = this.gameObject.GetComponent<SpriteRenderer>();
             trail = this.gameObject.GetComponent<TrailRenderer>();
+            anim = this.gameObject.GetComponent<Animator>();
             updateWeapon();
-            updateSpider();
             started = false;
         }
     	FrameControlls = P_Controll.PassInput();
@@ -130,10 +131,12 @@ public class PlayerMov : MonoBehaviour
         trs.Translate(vel*Time.fixedDeltaTime);
 
         //Trocar Sprites
-        if(FrameControlls.movDir != LastFrameControlls.movDir && FrameControlls.movDir != Vector2.zero){
-            var (s, o) = Spider.getFace(FrameControlls.movDir);
-            spr.sprite = s;
-            trail.sortingOrder = o;
+        if(FrameControlls.movDir != Vector2.zero){
+            anim.Play("move");
+        }
+        else
+        {
+            anim.Play("idle");
         }
 
         ////////////Movendo arma:
@@ -180,20 +183,6 @@ public class PlayerMov : MonoBehaviour
     {
         wp.Weapon = w;
     	wp.updateWeapon();
-    }
-
-    public void updateSpider()
-    {
-    	changeSpider(Spider);
-    }
-    public void changeSpider(SpiderScriptable s)
-    {
-    	Spider = s;
-    	life = Spider.life;
-    	speed = Spider.speed;
-    	var (ss, o) = Spider.getFace(FrameControlls.movDir);
-    		spr.sprite= ss;
-    		trail.sortingOrder = o;
     }
 
     
