@@ -42,7 +42,8 @@ public class MenuControllerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerPrefs.SetFloat("EffectsVolume", 0.5f);
+        PlayerPrefs.SetFloat("MusicVolume", 0.5f);
     }
 
     // Update is called once per frame

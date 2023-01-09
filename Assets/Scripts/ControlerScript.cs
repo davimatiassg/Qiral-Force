@@ -56,7 +56,7 @@ public class ControllerScript : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
-        audioPlayer.volume = PlayerPrefs.GetFloat("volume");
+        audioPlayer.volume = PlayerPrefs.GetFloat("EffectsVolume");
 
         AddCoins(coins);
         coreHpMax = GameObject.FindGameObjectWithTag("Core").GetComponent<GameWeb>().hp;
@@ -68,7 +68,7 @@ public class ControllerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        audioPlayer.volume = PlayerPrefs.GetFloat("volume");
+        audioPlayer.volume = PlayerPrefs.GetFloat("EffectsVolume");
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {

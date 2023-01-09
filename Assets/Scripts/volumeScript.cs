@@ -9,11 +9,15 @@ public class volumeScript : MonoBehaviour
 
     public Slider sliderval;
 
-    public void changeVolume()
+    public void changeVolumeEffects()
     {
-        PlayerPrefs.SetFloat("volume", sliderval.value);
+        PlayerPrefs.SetFloat("EffectsVolume", sliderval.value);
     }
 
+    public void changeVolumeMusic()
+    {
+        PlayerPrefs.SetFloat("MusicVolume", sliderval.value);
+    }
 
     // Start is called before the first frame update
     void Start()

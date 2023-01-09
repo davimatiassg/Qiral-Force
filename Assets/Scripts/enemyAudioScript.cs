@@ -66,12 +66,12 @@ public class enemyAudioScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioPlayer.volume = PlayerPrefs.GetFloat("volume");
+        audioPlayer.volume = PlayerPrefs.GetFloat("EffectsVolume");
     }
 
     // Update is called once per frame
     void Update()
     {
-        audioPlayer.volume = PlayerPrefs.GetFloat("volume");
+        audioPlayer.volume = PlayerPrefs.GetFloat("EffectsVolume");
     }
 }
