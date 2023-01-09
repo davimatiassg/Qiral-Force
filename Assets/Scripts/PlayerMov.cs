@@ -16,6 +16,9 @@ public class PlayerMov : MonoBehaviour
     private WeaponHandler wp;
 
     public WeaponScriptable Weapon;
+
+    public List<WeaponScriptable> weapons = new List<WeaponScriptable>();
+    public int weaponIdx = 0;
 	public SpiderScriptable Spider;
 
     public bool isAtk = false;
@@ -153,17 +156,17 @@ public class PlayerMov : MonoBehaviour
             wp.Shot(weaponPivot.transform.up);
         }
         //código defesa vem aqui
-        if(FrameControlls.DefBtn)
-        {
-            
-        }
-        //código habilidade vem aqui
-        if(FrameControlls.SklBtn && webCd >= 1f)
+        if(FrameControlls.DefBtn && webCd >= 1f)
         {
             webCd = 0f;
             Debug.Log("hellow");
             Construct.webShot(trs.position + weaponPivot.transform.up, weaponPivot.transform.up, 50f, 30f, webP1, webP2);
-
+        }
+        //código habilidade vem aqui
+        if(FrameControlls.SklBtn && !LastFrameControlls.SklBtn)
+        {
+            weaponIdx = (weaponIdx+1+ weapons.Count)%weapons.Count;
+            changeWeapon(weapons[weaponIdx]);
         }
 
 

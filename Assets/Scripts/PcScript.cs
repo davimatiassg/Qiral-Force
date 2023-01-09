@@ -15,6 +15,8 @@ public class PcScript : MonoBehaviour
     public static int MissileLauncherPrice = 99;
     public static int MachineGunPrice = 79;
 
+    public List<WeaponScriptable> Buyable = new List<WeaponScriptable>();
+
     public Text LaserGunPriceUI;
     public Text MoneyGunPriceUI;
     public Text MissileLauncherPriceUI;
@@ -40,26 +42,27 @@ public class PcScript : MonoBehaviour
             }
             return false;
         }
-
+        PlayerMov playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMov>();
         switch(id)
         {
+            
             case 3:
-                if (metaBuy(LaserGunPrice)) {LaserGunPrice = -1;Destroy(this.gameObject);}
-                //get gun
+                if (metaBuy(LaserGunPrice)) {LaserGunPrice = -1;Destroy(this.gameObject);playerScript.weapons.Add(Buyable[0]);}
+                
             break;
 
             case 2:
-                if (metaBuy(MoneyGunPrice)) {MoneyGunPrice = -1;Destroy(this.gameObject);}
+                if (metaBuy(MoneyGunPrice)) {MoneyGunPrice = -1;Destroy(this.gameObject);playerScript.weapons.Add(Buyable[1]);}
                 //get gun
             break;
 
             case 1:
-                if (metaBuy(MissileLauncherPrice)) {MissileLauncherPrice = -1;Destroy(this.gameObject);}
+                if (metaBuy(MissileLauncherPrice)) {MissileLauncherPrice = -1;Destroy(this.gameObject);playerScript.weapons.Add(Buyable[2]);}
                 //get gun
             break;
 
             case 0:
-                if (metaBuy(MachineGunPrice)) {MachineGunPrice = -1;Destroy(this.gameObject);}
+                if (metaBuy(MachineGunPrice)) {MachineGunPrice = -1;Destroy(this.gameObject);playerScript.weapons.Add(Buyable[3]);}
                 //get gun
             break;
         }

@@ -12,6 +12,7 @@ public class WeaponHandler : MonoBehaviour
     public void updateWeapon()
     {
         spr.sprite = Weapon.spr;
+        Cd = 0;
     }
 
     public void Shot(Vector2 dir)
