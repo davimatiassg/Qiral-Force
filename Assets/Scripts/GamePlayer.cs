@@ -27,6 +27,7 @@ public class GamePlayer : MonoBehaviour
             Time.timeScale = 0f;
             MainCanvas.SetActive(false);
             GameOver.SetActive(true);
+            Cursor.visible = true;
         }
     }
 }

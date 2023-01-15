@@ -23,12 +23,14 @@ public class ControllerScript : MonoBehaviour
 
     public AudioSource audioPlayer;
     public AudioClip coinGet;
+    public AudioClip heartGet;
 
     public void playAudio(string audio)
     {
         switch(audio)
         {
             case "coinGet": audioPlayer.clip = coinGet; break;
+            case "heartGet": audioPlayer.clip = heartGet; break;
         }
         audioPlayer.Play(0);
     }
@@ -38,6 +40,17 @@ public class ControllerScript : MonoBehaviour
         coins += qnt;
         coinsUI.text = coins.ToString() + "                 C o i n s  ";
         if (qnt > 0) {playAudio("coinGet");}
+    }
+
+    public void AddHeart(int qnt)
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().hp += qnt;
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().hp > playerHpMax)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().hp = playerHpMax;
+        }
+        updatePlayerHp(GameObject.FindGameObjectWithTag("Player").GetComponent<GamePlayer>().hp);
+        if (qnt > 0) {playAudio("heartGet");}
     }
 
     public void updateCoreHp(float hp)
@@ -55,6 +68,8 @@ public class ControllerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
+
         Time.timeScale = 1f;
         audioPlayer.volume = PlayerPrefs.GetFloat("EffectsVolume");
 
@@ -72,6 +87,7 @@ public class ControllerScript : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.visible = true;
             MainCanvas.SetActive(false);
             OptionsCanvas.SetActive(true);
             Time.timeScale = 0f;

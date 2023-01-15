@@ -7,6 +7,7 @@ public class Behaviour : MonoBehaviour
 
     private GameObject audioPlayer;
     public GameObject coin;
+    public GameObject Heart;
     public GameObject Bullet;
     public Transform player;
     public Transform core;
@@ -73,6 +74,15 @@ public class Behaviour : MonoBehaviour
         {
             Vector3 rndPos = new Vector3 (Random.Range(-2,2),Random.Range(-2,2),0);
             Instantiate(coin,transform.position + rndPos,transform.rotation);
+        }
+    }
+
+    void dropHearts()
+    {
+        if (Random.Range(0,4) == 0)
+        {
+            Vector3 rndPos = new Vector3 (Random.Range(-2,2),Random.Range(-2,2),0);
+            Instantiate(Heart,transform.position + rndPos,transform.rotation);
         }
     }
 
@@ -227,6 +237,7 @@ public class Behaviour : MonoBehaviour
     public void Die()
     {
         dropCoins(coins);
+        dropHearts();
         Destroy(this.gameObject);
     }
 

@@ -146,7 +146,7 @@ public class PlayerMov : MonoBehaviour
         float a = Mathf.SmoothDampAngle(weaponPivot.localEulerAngles.z, -Vector2.SignedAngle(FrameControlls.weapDir, Vector2.up), ref angularmmt, 10*Time.fixedDeltaTime);
         weaponPivot.transform.localEulerAngles = new Vector3(0, 0, a);
         weaponPoint.transform.localEulerAngles = new Vector3(0, 0, -0.5f);
-        weaponPoint.transform.localPosition = Vector2.up*0.9f;	
+        weaponPoint.transform.localPosition = Vector2.up*0.6f;	
         
         if(webCd < 1f)
         {
@@ -162,8 +162,11 @@ public class PlayerMov : MonoBehaviour
         if(FrameControlls.DefBtn && webCd >= 1f)
         {
             webCd = 0f;
-            Debug.Log("hellow");
-            Construct.webShot(trs.position + weaponPivot.transform.up, weaponPivot.transform.up, 50f, 30f, webP1, webP2);
+            if (GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().coins >= 5)
+            {
+                Construct.webShot(trs.position + weaponPivot.transform.up, weaponPivot.transform.up, 50f, 30f, webP1, webP2);
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<ControllerScript>().AddCoins(-5);
+            }
         }
         //código habilidade vem aqui
         if(FrameControlls.SklBtn && !LastFrameControlls.SklBtn)

@@ -13,6 +13,7 @@ public class OptionsCanvasControllerScript : MonoBehaviour
         Time.timeScale = 1f;
         MainCanvas.SetActive(true);
         OptionsCanvas.SetActive(false);
+        Cursor.visible = false;
     }
 
     // Start is called before the first frame update

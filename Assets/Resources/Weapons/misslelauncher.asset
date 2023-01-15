@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: misslelauncher
   spr: {fileID: 21300000, guid: 4fec8375259c9344b81e95192c20089d, type: 3}
-  Cd: 0.5
+  Cd: 0.8
   Shot: {fileID: 7396065257648407025, guid: f36ad1891723f4743bd91743a0a69072, type: 3}

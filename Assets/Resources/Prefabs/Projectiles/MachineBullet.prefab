@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: Enemy
-  dmg: 1
+  dmg: 0.4
   speed: 60
   durationTime: 0.5
   dir: {x: 0, y: 0, z: 0}

@@ -1500,6 +1500,11 @@ MonoBehaviour:
   store: {fileID: 7921059944297571700}
   store2: {fileID: 7921059944987109676}
   player: {fileID: 0}
+  Buyable:
+  - {fileID: 11400000, guid: 6e801a87c8b3a6f439e9b9c6d2247fbb, type: 2}
+  - {fileID: 11400000, guid: d622b5a22ab235940a62e5ebb1ee251d, type: 2}
+  - {fileID: 11400000, guid: 48c1dae0a76a68943a1195903d7fd75e, type: 2}
+  - {fileID: 11400000, guid: f4257d165d14aa44db8b62b96f7fdb8c, type: 2}
   LaserGunPriceUI: {fileID: 7921059944057108217}
   MoneyGunPriceUI: {fileID: 7921059944812840922}
   MissileLauncherPriceUI: {fileID: 7921059943307416578}

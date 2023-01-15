@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coin: {fileID: 3222283849385067035, guid: 3b1806e48cc251a4eae0ed730aa4cb42, type: 3}
+  Heart: {fileID: 3222283849385067035, guid: e094c314b8e10e74f90cb82c0a0adfeb, type: 3}
   Bullet: {fileID: 0}
   player: {fileID: 0}
   core: {fileID: 0}
