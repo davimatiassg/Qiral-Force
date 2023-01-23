@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMov : MonoBehaviour
 {
+    [SerializeField] public GameObject GunHolster;
     public float speed;
     public int life = 100;
 
@@ -176,6 +178,7 @@ public class PlayerMov : MonoBehaviour
     public void changeWeapon(WeaponScriptable w)
     {
         wp.Weapon = w;
+        GunHolster.transform.GetComponent<UnityEngine.UI.Image>().sprite = w.spr;
     	wp.updateWeapon();
     }
 

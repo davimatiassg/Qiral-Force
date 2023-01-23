@@ -1452,7 +1452,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 7b63de645ffc86249b15f997fa7d5a64, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1500,6 +1500,7 @@ MonoBehaviour:
   store: {fileID: 7921059944297571700}
   store2: {fileID: 7921059944987109676}
   player: {fileID: 0}
+  Buyable: []
   LaserGunPriceUI: {fileID: 7921059944057108217}
   MoneyGunPriceUI: {fileID: 7921059944812840922}
   MissileLauncherPriceUI: {fileID: 7921059943307416578}
