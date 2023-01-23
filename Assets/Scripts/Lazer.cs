@@ -39,7 +39,7 @@ public class Lazer : Bullet
     		}
     	}
     	Debug.Log(hitPoint);
-    	line.SetPosition(0, (Vector2)transform.position);
+    	line.SetPosition(0, (Vector2)transform.position + (Vector2)dir*0.9f);
     	line.SetPosition(1, hitPoint);
         durationTime -= Time.deltaTime;
         if (durationTime <= 0)

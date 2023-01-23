@@ -8,6 +8,7 @@ public class CoinScript : MonoBehaviour
     public GameObject Controller;
     public float spd = 0.5f;
     public float acel = 3f;
+    public float a_acel = 5f;
     private float rCoin = 0;
 
     // Start is called before the first frame update
@@ -36,7 +37,8 @@ public class CoinScript : MonoBehaviour
 
         //Movement
         spd += acel*Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, player.position, spd*Time.deltaTime);
+        transform.up = Vector3.RotateTowards(transform.up,(player.position - transform.position), spd*5, 0);
+        transform.Translate(Vector2.up*spd);
         
     }
 }

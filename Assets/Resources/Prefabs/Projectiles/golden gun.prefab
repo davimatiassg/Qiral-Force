@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7575285552116475022}
   - component: {fileID: -5587373274796934474}
   - component: {fileID: 8653176731466865622}
-  - component: {fileID: 8070066314258604299}
   - component: {fileID: -8280361079001157408}
+  - component: {fileID: 4258509112585914343}
   m_Layer: 0
   m_Name: golden gun
   m_TagString: Untagged
@@ -183,11 +183,11 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Time: 0.1
+  m_SortingOrder: -1
+  m_Time: 0.37
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -241,3 +241,21 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &4258509112585914343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396065257648407025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a810aef052cc1da449b6a8dded589b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: Enemy
+  dmg: 5
+  speed: 30
+  durationTime: 2
+  dir: {x: 0, y: 0, z: 0}
+  coin: {fileID: 3222283849385067035, guid: 3b1806e48cc251a4eae0ed730aa4cb42, type: 3}
