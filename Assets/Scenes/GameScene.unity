@@ -2981,6 +2981,8 @@ MonoBehaviour:
   weapons:
   - {fileID: 11400000, guid: 84d8f823b10a05b49b7471834216a0ce, type: 2}
   weaponIdx: 0
+  Weapon: {fileID: 11400000, guid: d622b5a22ab235940a62e5ebb1ee251d, type: 2}
+  Spider: {fileID: 11400000, guid: 1a6873db905fa7d459ba256c98028d36, type: 2}
   isAtk: 0
   moment: {x: 0, y: 0}
   pivotBack: {x: 0, y: 0}
@@ -2998,7 +3000,6 @@ MonoBehaviour:
   vel: {x: 0, y: 0}
   acl: 1
   snapTol: 0.1
-  anim: {fileID: 0}
 --- !u!212 &753665871
 SpriteRenderer:
   m_ObjectHideFlags: 0
